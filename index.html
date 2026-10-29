@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>MathKids - L'aventure magique des mathématiques</title>
+  
+  <!-- Polices adaptées aux enfants : rondes, lisibles et joyeuses -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <!-- Canvas pour les feux d'artifice de confetti -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- ========================================================================
+       En-tête de l'application (Header)
+       ======================================================================== -->
+  <header class="site-header">
+    <div class="header-container">
+      
+      <!-- Logo et Titre -->
+      <div class="logo-area" data-view-target="home">
+        <span class="logo-icon">🚀</span>
+        <span class="logo-text">MathKids</span>
+      </div>
+
+      <!-- Navigation Ordinateur / Tablette -->
+      <nav class="desktop-nav">
+        <button class="nav-link active" data-view-target="home">🏠 Accueil</button>
+        <button class="nav-link" data-view-target="lessons">📖 Leçons</button>
+        <button class="nav-link" data-view-target="practice">🎯 Entraînement</button>
+        <button class="nav-link" data-view-target="quiz">🏆 Défi Quiz</button>
+        <button class="nav-link" data-view-target="progress">⭐ Trophées</button>
+      </nav>
+
+      <!-- Indicateurs de récompenses et son -->
+      <div class="header-actions">
+        <div class="stat-pill" title="Étoiles gagnées">
+          <span>⭐</span>
+          <span id="header-stars-count">0</span>
+        </div>
+        <div class="stat-pill" style="background:#EEF2FF; border-color:#C7D2FE; color:#4338CA;" title="Points d'expérience">
+          <span>⚡</span>
+          <span id="header-score-count">0</span> XP
+        </div>
+        <button id="sound-toggle-btn" class="icon-btn" title="Activer / Couper les sons" aria-label="Contrôle du son">
+          🔊
+        </button>
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ========================================================================
+       Contenu Principal de l'Application
+       ======================================================================== -->
+  <main class="main-content">
+
+    <!-- ======================================================================
+         VUE 1 : ACCUEIL
+         ====================================================================== -->
+    <section id="view-home" class="view-section active">
+      
+      <!-- Bannière Héro Colorée -->
+      <div class="hero-banner">
+        <div class="hero-text">
+          <h1>Deviens un super héros des Maths !</h1>
+          <p>Explore les nombres, relève des défis amusants et collectionne plein d'étoiles et de badges magiques !</p>
+          <div class="hero-buttons">
+            <button class="btn btn-accent btn-lg" data-view-target="practice">
+              🚀 Jouer Maintenant
+            </button>
+            <button class="btn btn-secondary btn-lg" data-view-target="lessons">
+              📚 Découvrir les Leçons
+            </button>
+          </div>
+        </div>
+        <div class="hero-mascot-box">
+          🦊
+          <div class="mascot-speech">Salut champion ! Prêt à t'amuser ?</div>
+        </div>
+      </div>
+
+      <!-- Statistiques Rapides -->
+      <div class="stats-bar-grid">
+        <div class="stat-card">
+          <div class="stat-card-icon">🎯</div>
+          <div class="stat-card-info">
+            <h4 id="stat-total-answers">0</h4>
+            <span>Calculs tentés</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">🔥</div>
+          <div class="stat-card-info">
+            <h4 id="stat-max-streak">0</h4>
+            <span>Meilleure série</span>
+          </div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">🎖️</div>
+          <div class="stat-card-info">
+            <h4 id="stat-correct-pct">100%</h4>
+            <span>Taux de réussite</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Thèmes d'apprentissage -->
+      <div class="section-header">
+        <h2>Choisis ton thème d'apprentissage</h2>
+      </div>
+
+      <div class="topics-grid" id="topics-grid-container">
+        <!-- Rendu dynamique par JS -->
+      </div>
+
+      <!-- Appel au Quiz Défi -->
+      <div class="card" style="background: linear-gradient(135deg, #EFF6FF, #DBEAFE); border-color: #93C5FD; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; margin-top: 16px;">
+        <div>
+          <h3 style="font-size: 1.35rem; color: #1E3A8A; margin-bottom: 4px;">Prêt pour le Grand Défi Quiz ?</h3>
+          <p style="color: #1E40AF;">5 questions aléatoires pour tester tes compétences et gagner un max d'étoiles !</p>
+        </div>
+        <button class="btn btn-primary btn-lg" data-view-target="quiz">
+          🏆 Lancer le Quiz
+        </button>
+      </div>
+
+    </section>
+
+    <!-- ======================================================================
+         VUE 2 : LEÇONS / COURS ILLUSTRÉS
+         ====================================================================== -->
+    <section id="view-lessons" class="view-section">
+      
+      <div class="section-header">
+        <div>
+          <h2>Les Mini-Leçons Magiques</h2>
+          <p>Des explications simples, avec des images et des astuces faciles à retenir.</p>
+        </div>
+      </div>
+
+      <!-- Onglets thématiques de cours -->
+      <div class="lesson-nav-tabs" id="lesson-tabs-container">
+        <!-- Rendu dynamique par JS -->
+      </div>
+
+      <!-- Contenu détaillé du cours sélectionné -->
+      <div id="lesson-content-display">
+        <!-- Rendu dynamique par JS -->
+      </div>
+
+    </section>
+
+    <!-- ======================================================================
+         VUE 3 : ENTRAÎNEMENT INTERACTIF
+         ====================================================================== -->
+    <section id="view-practice" class="view-section">
+      
+      <div class="practice-container">
+        
+        <div style="text-align: center; margin-bottom: 20px;">
+          <h2>L'Atelier de Calcul Mental</h2>
+          <p>Choisis ton opération et ton niveau pour t'entraîner à ton rythme !</p>
+        </div>
+
+        <!-- Sélecteur de niveau -->
+        <div class="difficulty-selector">
+          <button class="diff-btn active" data-diff="facile">🌱 Facile</button>
+          <button class="diff-btn" data-diff="moyen">⭐ Moyen</button>
+          <button class="diff-btn" data-diff="difficile">🔥 Difficile</button>
+        </div>
+
+        <!-- Sélecteur d'opération -->
+        <div class="operation-selector">
+          <button class="op-btn active" data-op="addition" title="Addition (+)">➕</button>
+          <button class="op-btn" data-op="soustraction" title="Soustraction (-)">➖</button>
+          <button class="op-btn" data-op="multiplication" title="Multiplication (×)">✖️</button>
+          <button class="op-btn" data-op="division" title="Division (÷)">➗</button>
+          <button class="op-btn" data-op="problemes" title="Problèmes énigmes">🧩</button>
+        </div>
+
+        <!-- Carte d'exercice -->
+        <div class="exercise-card">
+          <div class="question-streak-indicator" id="practice-streak-counter">
+            🔥 Série : 0
+          </div>
+
+          <div class="exercise-prompt" id="practice-prompt-text">
+            Quel est le bon résultat ?
+          </div>
+
+          <div class="math-display" id="practice-math-display">
+            <!-- Rendu dynamique -->
+          </div>
+
+          <!-- Boutons de réponse larges et tactiles -->
+          <div class="answers-grid" id="practice-answers-grid">
+            <!-- 4 boutons tactiles dynamiques -->
+          </div>
+
+          <!-- Message de feedback immédiat -->
+          <div class="feedback-box" id="practice-feedback">
+            Choisis la bonne réponse ci-dessus !
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================================
+         VUE 4 : DÉFI QUIZ
+         ====================================================================== -->
+    <section id="view-quiz" class="view-section">
+      
+      <div class="quiz-wrapper">
+
+        <!-- Écran de présentation du quiz -->
+        <div class="quiz-card" id="quiz-intro-card" style="text-align: center;">
+          <div style="font-size: 4.5rem; margin-bottom: 16px;">🏆</div>
+          <h2 style="font-size: 1.8rem; margin-bottom: 12px;">Le Grand Défi MathKids</h2>
+          <p style="font-size: 1.05rem; max-width: 480px; margin: 0 auto 24px auto;">
+            Réponds à une série de 5 questions pour tester tes super-pouvoirs de calcul et débloquer le badge spécial du quiz !
+          </p>
+          <button id="start-quiz-btn" class="btn btn-accent btn-lg">
+            ⚡ Commencer le Grand Défi !
+          </button>
+        </div>
+
+        <!-- Écran de question en cours -->
+        <div id="quiz-question-view" style="display: none;">
+          <!-- Barre de progression -->
+          <div class="quiz-progress-bar-container">
+            <div class="quiz-progress-fill" id="quiz-progress-fill"></div>
+          </div>
+
+          <div class="quiz-card">
+            <div class="quiz-header-info">
+              <span id="quiz-counter-text">Question 1 sur 5</span>
+              <span id="quiz-current-score-text" style="color: #4F46E5;">Score : 0 pts</span>
+            </div>
+
+            <h3 class="quiz-question-text" id="quiz-question-title">
+              Question en cours...
+            </h3>
+
+            <div class="quiz-options-list" id="quiz-options-container">
+              <!-- Options de réponses -->
+            </div>
+
+            <div class="quiz-explanation-box" id="quiz-explanation-box" style="display: none;">
+              <!-- Explication pédagogique -->
+            </div>
+
+            <div style="text-align: right;">
+              <button id="quiz-next-btn" class="btn btn-primary" style="display: none;">
+                Suivant ➔
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Écran de résultat final -->
+        <div class="quiz-card quiz-result-card" id="quiz-result-view" style="display: none;">
+          <div class="quiz-result-trophy">🎉</div>
+          <h2 id="quiz-result-title">Félicitations !</h2>
+          <div class="quiz-result-score" id="quiz-result-score">100 / 100 pts</div>
+          <p id="quiz-result-message">Tu as super bien répondu aux questions !</p>
+          
+          <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 24px;">
+            <button id="quiz-restart-btn" class="btn btn-accent">
+              🔄 Rejouer le Quiz
+            </button>
+            <button class="btn btn-secondary" data-view-target="progress">
+              ⭐ Voir mes Trophées
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ======================================================================
+         VUE 5 : PROGRESSION & TROPHÉES
+         ====================================================================== -->
+    <section id="view-progress" class="view-section">
+      
+      <div class="section-header">
+        <div>
+          <h2>Ta Salle des Trophées</h2>
+          <p>Chaque effort compte ! Regarde tout ce que tu as accompli.</p>
+        </div>
+      </div>
+
+      <!-- Résumé du niveau -->
+      <div class="progress-summary-card">
+        <div class="level-row">
+          <div>
+            <h3 id="progress-level-title" style="font-size: 1.4rem;">Apprenti Calculateur</h3>
+            <p id="progress-xp-detail" style="font-weight: 600; color: #4F46E5;">0 XP</p>
+          </div>
+          <span class="level-badge" id="progress-level-tag">Niveau 1</span>
+        </div>
+
+        <div class="progress-overall-bar">
+          <div class="progress-overall-fill" id="progress-level-fill"></div>
+        </div>
+      </div>
+
+      <!-- Grille des Badges à collectionner -->
+      <h3 style="margin-bottom: 16px; font-size: 1.3rem;">Tes Badges et Récompenses</h3>
+      <div class="badges-grid" id="badges-container-grid">
+        <!-- Rendu dynamique par JS -->
+      </div>
+
+      <!-- Bouton Réinitialiser pour recommencer à zéro si besoin -->
+      <div style="text-align: center; margin-top: 40px;">
+        <button id="reset-progress-btn" style="background: none; border: none; color: #94A3B8; font-size: 0.85rem; text-decoration: underline; cursor: pointer;">
+          Réinitialiser ma progression
+        </button>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- ========================================================================
+       Modale de Récompense (Déblocage de Badge)
+       ======================================================================== -->
+  <div class="modal-overlay" id="reward-modal">
+    <div class="modal-card">
+      <div class="modal-icon" id="modal-badge-icon">⭐</div>
+      <h3 id="modal-badge-title">Nouveau Badge Débloqué !</h3>
+      <p id="modal-badge-desc">Félicitations pour ton exploit !</p>
+      <button class="btn btn-accent btn-lg" id="close-modal-btn">
+        Super, merci ! 🥳
+      </button>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       Barre de Navigation Mobile (Sticky Bottom - Mobile First)
+       ======================================================================== -->
+  <nav class="mobile-bottom-nav">
+    <button class="mobile-nav-btn active" data-view-target="home">
+      <span class="nav-icon">🏠</span>
+      <span>Accueil</span>
+    </button>
+    <button class="mobile-nav-btn" data-view-target="lessons">
+      <span class="nav-icon">📖</span>
+      <span>Leçons</span>
+    </button>
+    <button class="mobile-nav-btn" data-view-target="practice">
+      <span class="nav-icon">🎯</span>
+      <span>Calcul</span>
+    </button>
+    <button class="mobile-nav-btn" data-view-target="quiz">
+      <span class="nav-icon">🏆</span>
+      <span>Quiz</span>
+    </button>
+    <button class="mobile-nav-btn" data-view-target="progress">
+      <span class="nav-icon">⭐</span>
+      <span>Trophées</span>
+    </button>
+  </nav>
+
+  <!-- ========================================================================
+       Pied de page
+       ======================================================================== -->
+  <footer class="site-footer">
+    <p>MathKids &bull; Plateforme d'apprentissage ludique des mathématiques pour enfants &bull; 100% HTML, CSS & JavaScript</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="js/audio.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
+
